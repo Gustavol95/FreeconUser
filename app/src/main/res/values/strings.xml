@@ -1,3 +1,71 @@
 <resources>
     <string name="app_name">FreeconUser</string>
+
+    <!-- LOGIN-->
+    <string name="iniciarSesion">Iniciar Sesión</string>
+
+    <!-- REGISTRO-->
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellidos</string>
+    <string name="interior">No. Interior (opcional)</string>
+    <string name="correo">Correo Electrónico</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="confirma_contrasena">Confirmar Contraseña</string>
+    <string name="calle">Calle</string>
+    <string name="colonia">Colonia</string>
+    <string name="estado">Estado</string>
+    <string name="telefono">Teléfono</string>
+    <string name="cp">C.P.</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="exterior">No. Exterior</string>
+    <string name="continuar">Continuar</string>
+    <string name="finalizar">Finalizar</string>
+    <string name="profesion">Profesión</string>
+    <string name="descripcion">Descripción</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Cuenta</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Entrar</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">Correo invalido</string>
+    <string name="error_invalid_password">Contraseña invalida</string>
+    <string name="error_incorrect_password">Contraseña incorrecta</string>
+    <string name="error_field_required">Este campo es requerido</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="action_settings">Cerrar Sesión</string>
+    <string name="title_activity_servicios">Servicios</string>
+    <string name="title_activity_map">Mapa</string>
+    <string name="title_activity_map_tramos">Mapas y Tramos</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="map_action_title">MAPA</string>
+
+    <!-- Error codes -->
+    <string name="title_alert">Alerta !</string>
+    <string name="title_error">Error !</string>
+    <string name="button_ok">Continuar</string>
+    <string name="button_send">Enviar</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="there_was_an_error">Hubo un problema</string>
+    <string name="activation_error">Necesita confirmar cuenta con el codigo que se le envio a su correo.</string>
+    <string name="invalid_credentials">Usuario y/o contraseña incorrectos.</string>
+    <string name="too_many_attempts">Cuenta bloqueada por intentos fallidos de inicio de sesión, Intente en 15 minutos.</string>
+    <string name="token_expired">Tu sesión ha expirado, vuelva a ingresar.</string>
+    <string name="token_invalid">Tu sesión ya no es válidad, vuelva a ingresar</string>
+    <string name="model_not_found">El recurso al que quiere acceder no se encuentra disponible</string>
+    <string name="http_not_found">La ruta a la que desea acceder no existe</string>
+    <string name="unreachable_network">No fue posible acceder a internet, verifica tu conexión.</string>
+    <string name="unknown_host_exception">No es posible conectarse al servidor</string>
+    <string name="unexpected_error">Ocurrio un error inesperado</string>
+    <string name="report_error">Enviar reporte</string>
+    <string name="network_settings">Ir a configuración de red</string>
+    <string name="timeout">Tiempo de espera agotado</string>
+
+    <!-- FACEBOOK METADATA -->
+    <string name="facebook_app_id">1665853763438850</string>
+    <string name="fb_login_protocol_scheme">fb1665853763438850</string>
+
+
+
 </resources>

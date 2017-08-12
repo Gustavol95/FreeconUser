@@ -64,6 +64,8 @@ public abstract class CustomResourceObserver<T> extends ResourceObserver<T> {
     @Override
     public void onError(Throwable e) {
 
+        Log.i(TAG,"ERROR DE PETICIONNNN "+e.toString());
+
         if (e instanceof HttpException) {
             HttpException exception = (HttpException) e;
 
@@ -74,7 +76,7 @@ public abstract class CustomResourceObserver<T> extends ResourceObserver<T> {
                 case 404:
                 case 405:
                 case 423:
-
+                case 422:
                     ResponseError error = paserError(exception);
 
 
@@ -90,9 +92,9 @@ public abstract class CustomResourceObserver<T> extends ResourceObserver<T> {
                             }).show();
 
 
-                    break;
 
-                case 422:
+
+
                     break; // Unprocessable Entity
 
                 case 500:
@@ -169,7 +171,7 @@ public abstract class CustomResourceObserver<T> extends ResourceObserver<T> {
         String body = null;
         try {
 
-            body = e.response().errorBody().string();
+            body = e.response().errorBody().source().readUtf8().toString();
             Gson gson = new Gson();
             responseError = gson.fromJson(body, ResponseError.class);
 

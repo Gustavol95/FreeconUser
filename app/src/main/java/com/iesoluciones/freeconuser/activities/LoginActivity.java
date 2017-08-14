@@ -20,7 +20,9 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.iesoluciones.freeconuser.ObservableHelper;
 import com.iesoluciones.freeconuser.R;
+import com.iesoluciones.freeconuser.models.Categoria;
 import com.iesoluciones.freeconuser.models.LoginFbResponse;
+import com.iesoluciones.freeconuser.models.Servicio;
 import com.iesoluciones.freeconuser.network.helpers.CustomResourceObserver;
 
 
@@ -61,41 +63,24 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setReadPermissions("email");
         callbackManager = CallbackManager.Factory.create();
         //Log.i(TAG,"FIREBASE TOKEENNN -----------> "+ FirebaseInstanceId.getInstance().getToken());
+        ObservableHelper.getServicios().subscribe(new CustomResourceObserver<List<Servicio>>(this) {
+            @Override
+            public void onNext(List<Servicio> value) {
 
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-
-
-        if (accessToken != null) {
-            if (accessToken.isExpired()) {
-                Toast.makeText(this, "Expiró, pidelo", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "JALEESE COMPA", Toast.LENGTH_SHORT).show();
-                ObservableHelper.loginFb(accessToken.getToken())
-                        .subscribe(new CustomResourceObserver<LoginFbResponse>(LoginActivity.this) {
-                            @Override
-                            public void onNext(LoginFbResponse value) {
-                                if (value.getUsuario().getActivado() == 1) {
-                                    //Pasa directito al dashboard
-                                    //startActivity(new Intent(LoginActivity.this,DrawerActivity.class));
-                                    //finish();
-                                    Log.i(TAG, "ACTIVADO TRUE");
-                                } else {
-                                    //Pasa directito al registro CON EXTRAS
-                                    Intent i = new Intent(LoginActivity.this, RegistroActivity.class);
-                                    i.putExtra("fb", true);
-                                    startActivity(i);
-                                    Log.i(TAG, "ACTIVADO FALSE");
-                                }
-                                Log.i(TAG, "ACTIVADO aasas");
-                            }
-
-                        });
             }
-        } else {
-            Toast.makeText(this, "PIDELOO", Toast.LENGTH_SHORT).show();
-        }
 
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                Log.i(TAG,e+"");
+            }
+        });
+        ObservableHelper.getCatgorias().subscribe(new CustomResourceObserver<List<Categoria>>(LoginActivity.this) {
+            @Override
+            public void onNext(List<Categoria> value) {
 
+            }
+        });
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -107,8 +92,8 @@ public class LoginActivity extends AppCompatActivity {
                             public void onNext(LoginFbResponse value) {
                                 if (value.getUsuario().getActivado() == 1) {
                                     //Pasa directito al dashboard
-                                   // startActivity(new Intent(LoginActivity.this,DrawerActivity.class));
-                                   // finish();
+                                   startActivity(new Intent(LoginActivity.this,DrawerActivity.class));
+                                   finish();
                                     Log.i(TAG, "ACTIVADO TRUE");
                                 } else {
                                     //Pasa directito al registro CON EXTRAS

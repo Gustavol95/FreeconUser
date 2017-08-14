@@ -2,10 +2,12 @@ package com.iesoluciones.freeconuser;
 
 import android.app.Application;
 
+import com.iesoluciones.freeconuser.models.CategoriaResponse;
 import com.iesoluciones.freeconuser.models.DaoMaster;
 import com.iesoluciones.freeconuser.models.DaoSession;
 import com.iesoluciones.freeconuser.models.LoginFbResponse;
 import com.iesoluciones.freeconuser.models.RegistroBody;
+import com.iesoluciones.freeconuser.models.ServicioResponse;
 import com.iesoluciones.freeconuser.network.interceptors.LogInterceptor;
 
 import org.greenrobot.greendao.database.Database;
@@ -33,7 +35,7 @@ public class App extends Application {
             "http://10.112.32.244/freecon/v1/",
             "http://10.112.32.135/freecon/backend/public/"
     };
-    public static final String BASE_URL =URLS[1];
+    public static final String BASE_URL =URLS[0];
     private static App shareInstance;
     private DaoSession daoSession;
     ApiRoutes apiRoutes;
@@ -47,7 +49,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         shareInstance = this;
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"dbFreecon");
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this,"dbFreeconUser");
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
         OkHttpClient client = new OkHttpClient.Builder()
@@ -102,6 +104,12 @@ public class App extends Application {
         @FormUrlEncoded
         @POST("clientes/login-fb")
         Observable<LoginFbResponse> loginFb(@Field("token") String token);
+
+        @GET("clientes/servicios")
+        Observable<ServicioResponse> getServicios();
+
+        @GET("clientes/categorias")
+        Observable<CategoriaResponse> getCategorias();
 
     }
 

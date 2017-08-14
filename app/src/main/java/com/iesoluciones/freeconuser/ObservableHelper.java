@@ -3,9 +3,15 @@ package com.iesoluciones.freeconuser;
 
 import android.util.Log;
 
+import com.iesoluciones.freeconuser.models.Categoria;
+import com.iesoluciones.freeconuser.models.CategoriaResponse;
 import com.iesoluciones.freeconuser.models.LoginFbResponse;
 import com.iesoluciones.freeconuser.models.RegistroBody;
+import com.iesoluciones.freeconuser.models.Servicio;
+import com.iesoluciones.freeconuser.models.ServicioResponse;
 import com.iesoluciones.freeconuser.models.Usuario;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -84,6 +90,30 @@ public class ObservableHelper {
                     return data;
                 });
 
+    }
+
+    public static Observable<List<Servicio>> getServicios() {
+        return App.getInstance()
+                .getApiRoutes()
+                .getServicios()
+                .subscribeOn(Schedulers.newThread())
+                .map((ServicioResponse info) -> {
+                    Log.i(TAG, "AHI ESTA "+info.toString());
+                    App.getInstance().getDaoSession().getServicioDao().insertOrReplaceInTx(info.getData());
+                    return info.getData();
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<List<Categoria>> getCatgorias() {
+        return App.getInstance().getApiRoutes().getCategorias()
+                .subscribeOn(Schedulers.newThread())
+                .map((CategoriaResponse info) -> {
+                    Log.i(TAG, "AHI ESTA "+info.toString());
+                    App.getInstance().getDaoSession().getCategoriaDao().insertOrReplaceInTx(info.getData());
+                    return info.getData();
+                })
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }
 

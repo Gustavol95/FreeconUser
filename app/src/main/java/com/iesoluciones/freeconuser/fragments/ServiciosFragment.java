@@ -27,12 +27,12 @@ public class ServiciosFragment extends Fragment {
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
     ServiciosAdapter adapter;
-    int idCategoria; //id para el adapter
+    long idCategoria; //id para el adapter
 
-    public static ServiciosFragment newInstance(int idCategoria){
+    public static ServiciosFragment newInstance(long idCategoria){
         ServiciosFragment fragment=new ServiciosFragment();
         fragment.setIdCategoria(idCategoria);
-        return new ServiciosFragment();
+        return fragment;
     }
 
     @Nullable
@@ -45,12 +45,9 @@ public class ServiciosFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
-        adapter=new ServiciosAdapter(idCategoria, new ServiciosAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Servicio servicio) {
-                //Mandar a fragment y meter a backstack, y meter el servicio WEEEEBBBBB
-                Toast.makeText(getContext(), "METELE AL "+servicio.getNombre(), Toast.LENGTH_SHORT).show();
-            }
+        adapter=new ServiciosAdapter(idCategoria, servicio -> {
+            //Mandar a fragment y meter a backstack, y meter el servicio WEEEEBBBBB
+            Toast.makeText(getContext(), "METELE AL "+servicio.getNombre(), Toast.LENGTH_SHORT).show();
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -64,11 +61,11 @@ public class ServiciosFragment extends Fragment {
         this.adapter = adapter;
     }
 
-    public int getIdCategoria() {
+    public long getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(int idCategoria) {
+    public void setIdCategoria(long idCategoria) {
         this.idCategoria = idCategoria;
     }
 }

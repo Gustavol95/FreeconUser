@@ -1,6 +1,7 @@
 package com.iesoluciones.freeconuser.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.iesoluciones.freeconuser.models.ServicioDao;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by iedeveloper on 14/08/17.
@@ -21,6 +23,7 @@ import butterknife.BindView;
 
 public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.ViewHolder> {
 
+    static final String TAG=ServiciosAdapter.class.getSimpleName();
     List<Servicio> servicios;
     OnItemClickListener listener;
 
@@ -28,14 +31,15 @@ public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.View
         void onItemClick(Servicio categoria);
     }
 
-    public ServiciosAdapter(int idCategoria, OnItemClickListener listener) {
+    public ServiciosAdapter(long idCategoria, OnItemClickListener listener) {
         servicios= App.getInstance().getDaoSession().getServicioDao().queryBuilder().where(ServicioDao.Properties.CategoriaId.eq(idCategoria)).list();
+        Log.i(TAG,idCategoria+"");
         this.listener=listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_categorias, null);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_servicios, null);
         ViewHolder holder = new ViewHolder(layoutView);
         return holder;
     }
@@ -56,6 +60,7 @@ public class ServiciosAdapter extends RecyclerView.Adapter<ServiciosAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
         }
 
         private void bind(Servicio s){

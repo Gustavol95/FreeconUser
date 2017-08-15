@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.iesoluciones.freeconuser">
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -35,7 +37,10 @@
         <activity android:name=".MainActivity">
 
         </activity>
+        <activity android:name=".activities.DrawerActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
 
+        </activity>
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

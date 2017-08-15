@@ -28,11 +28,9 @@ public class LogInterceptor implements Interceptor {
 
         printRequest(request);
 
-
-        long t1 = System.nanoTime();
         Response response = chain.proceed(request);
-       // Log.i(TAG,response.body().source().readUtf8().toString());
-        long t2 = System.nanoTime();
+        Response copy=response;
+      //  Log.i(TAG,copy.body().source().readUtf8().toString());
         return response;
     }
 

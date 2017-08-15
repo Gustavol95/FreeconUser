@@ -48,6 +48,10 @@ public class ServiciosFragment extends Fragment {
         adapter=new ServiciosAdapter(idCategoria, servicio -> {
             //Mandar a fragment y meter a backstack, y meter el servicio WEEEEBBBBB
             Toast.makeText(getContext(), "METELE AL "+servicio.getNombre(), Toast.LENGTH_SHORT).show();
+            getFragmentManager().beginTransaction().replace(R.id.frameDrawer,PrestadoresFragment.newInstance())
+                    .addToBackStack("TAG")
+                    .commit();
+
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.iesoluciones.freeconuser.models.Categoria;
 import com.iesoluciones.freeconuser.models.CategoriaResponse;
 import com.iesoluciones.freeconuser.models.LoginFbResponse;
+import com.iesoluciones.freeconuser.models.Prestador;
 import com.iesoluciones.freeconuser.models.RegistroBody;
 import com.iesoluciones.freeconuser.models.Servicio;
 import com.iesoluciones.freeconuser.models.ServicioResponse;
@@ -16,6 +17,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 /**
  * Created by iedeveloper on 08/08/17.
@@ -113,6 +115,13 @@ public class ObservableHelper {
                     App.getInstance().getDaoSession().getCategoriaDao().insertOrReplaceInTx(info.getData());
                     return info.getData();
                 })
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
+    public static Observable<List<Prestador>> getPrestadoresPorServicio(String idServicio){
+        return App.getInstance().getApiRoutes().getPrestadoresPorServicio(idServicio)
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }

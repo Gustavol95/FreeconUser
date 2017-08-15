@@ -1,6 +1,7 @@
 package com.iesoluciones.freeconuser.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 public class CategoriasAdapter extends RecyclerView.Adapter<CategoriasAdapter.ViewHolder> {
 
 
-
+    static final String TAG=CategoriasAdapter.class.getSimpleName();
     List<Categoria> categorias;
     OnItemClickListener listener;
 
@@ -34,6 +35,7 @@ public class CategoriasAdapter extends RecyclerView.Adapter<CategoriasAdapter.Vi
 
     public CategoriasAdapter(OnItemClickListener listener) {
         categorias= App.getInstance().getDaoSession().getCategoriaDao().loadAll();
+        Log.i(TAG,categorias.toString());
         this.listener=listener;
     }
 

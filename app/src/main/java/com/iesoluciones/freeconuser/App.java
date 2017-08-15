@@ -6,11 +6,14 @@ import com.iesoluciones.freeconuser.models.CategoriaResponse;
 import com.iesoluciones.freeconuser.models.DaoMaster;
 import com.iesoluciones.freeconuser.models.DaoSession;
 import com.iesoluciones.freeconuser.models.LoginFbResponse;
+import com.iesoluciones.freeconuser.models.Prestador;
 import com.iesoluciones.freeconuser.models.RegistroBody;
 import com.iesoluciones.freeconuser.models.ServicioResponse;
 import com.iesoluciones.freeconuser.network.interceptors.LogInterceptor;
 
 import org.greenrobot.greendao.database.Database;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
@@ -24,6 +27,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Query;
 
 /**
  * Created by iedeveloper on 11/08/17.
@@ -110,6 +114,10 @@ public class App extends Application {
 
         @GET("clientes/categorias")
         Observable<CategoriaResponse> getCategorias();
+
+
+        @GET("clientes/proveedores/servcate")
+        Observable<List<Prestador>> getPrestadoresPorServicio(@Query("servicio") String servicio);
 
     }
 

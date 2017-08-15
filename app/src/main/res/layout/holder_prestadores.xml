@@ -1,90 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
-
-    <RelativeLayout
+    android:orientation="vertical">
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
 
-        <TextView
-            android:id="@+id/tvFolio"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="#315" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal">
+            android:padding="7dp">
 
             <TextView
-                android:id="@+id/tvCalificacion"
+                android:id="@+id/tvFolio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="5.0" />
-
-            <ImageView
-                android:id="@+id/ivEstrella"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@android:drawable/star_big_off" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvTitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvFolio"
-            android:text="Clasificación" />
-
-        <TextView
-            android:id="@+id/tvDescripcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTitulo"
-            android:text="Descripción" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDescripcion">
-
-            <TextView
-                android:id="@+id/tvFecha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|bottom"
-                android:text="Hace 5 minutos" />
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/linearCalificacion"
+                android:ellipsize="end"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="Jocxan Fragozo Hernandez klasjdfksaldjgaksrghsdflgkjsdfglkjdsfgldskjfg" />
 
             <LinearLayout
+                android:id="@+id/linearCalificacion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabVer"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
+                <TextView
+                    android:id="@+id/tvCalificacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="5.0"
+                    android:textStyle="bold"/>
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fabDescartar"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp" />
-
-
+                <ImageView
+                    android:id="@+id/ivEstrella"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@android:drawable/star_big_off" />
             </LinearLayout>
 
-        </FrameLayout>
+            <TextView
+                android:id="@+id/tvTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvFolio"
+                android:text="Carpintería y acabados en hojalata"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@android:color/black"
+                android:layout_toLeftOf="@+id/linearCalificacion"
+                />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tvDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTitulo"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"
+                android:text="Trabajos finos en abedul y pino, tenemos 15 años de experiencia negocio familiar desde Concordia, Sinaloa"
+                android:maxLines="2"
+                android:ellipsize="end"
 
-</android.support.v7.widget.CardView>
+                />
+
+
+                <TextView
+                    android:id="@+id/tvFecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="Culiacán, Sinaloa"
+                    android:textStyle="bold"
+                    android:layout_below="@+id/tvDescripcion" />
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

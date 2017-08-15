@@ -37,7 +37,8 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".activities.DrawerActivity">
+        <activity android:name=".activities.DrawerActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden">
 
         </activity>
         <activity android:name=".activities.SplashActivity">

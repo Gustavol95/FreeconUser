@@ -27,14 +27,14 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputNombre"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 app:hintEnabled="true"
                 android:hint="@string/nombre">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editNombre"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:lines="1"
                     android:inputType="textPersonName"
                     />
@@ -43,14 +43,14 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputApellido"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 app:hintEnabled="true"
                 android:hint="@string/apellido">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editApellido"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:lines="1"
                     android:inputType="textPersonName"/>
 
@@ -58,14 +58,14 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputCorreoElectronico"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 app:hintEnabled="true"
                 android:hint="@string/correo">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editCorreoElectronico"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:lines="1"
                     android:inputType="textEmailAddress"/>
 
@@ -74,12 +74,12 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputContrasena"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editContrasena"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="@string/contrasena"
                     android:lines="1"
                     android:inputType="textPassword"/>
@@ -89,12 +89,12 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputContrasenaConfirmacion"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editContrasenaConfirmacion"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="@string/confirma_contrasena"
                     android:lines="1"
                     android:inputType="textPassword"/>
@@ -104,12 +104,12 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputTelefono"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/editTelefono"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="@string/telefono"
                     android:lines="1"
                     android:inputType="phone"/>

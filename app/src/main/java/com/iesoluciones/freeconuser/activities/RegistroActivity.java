@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
+import com.github.phajduk.rxvalidator.RxValidator;
 import com.iesoluciones.freeconuser.App;
 import com.iesoluciones.freeconuser.ObservableHelper;
 import com.iesoluciones.freeconuser.R;
@@ -25,7 +26,11 @@ import com.iesoluciones.freeconuser.network.helpers.CustomResourceObserver;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.observers.ResourceObserver;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func2;
+
 
 /**
  * Created by iedeveloper on 07/08/17.
@@ -86,7 +91,7 @@ public class RegistroActivity extends AppCompatActivity {
               editContrasena.setEnabled(false);
               editContrasenaConfirmacion.setEnabled(false);
         }
-
+        setUpValidators();
         Log.i(TAG, " facebook " + facebookUser);
 
 
@@ -160,5 +165,52 @@ public class RegistroActivity extends AppCompatActivity {
                     }
 
                 });
+    }
+
+    public void setUpValidators(){
+
+        Observable<Boolean> observable =
+                RxValidator.createFor(editTelefono)
+                        .nonEmpty("No puede estar vacío")
+                        .length( 10,"El telefono debe de ser de 10 dígitos")
+                        .onFocusChanged()
+                        .toObservable()
+                        .observeOn(AndroidSchedulers.mainThread())
+                .map(result -> {
+                   // result.getItem().setError(result.isProper() ? null : result.getMessage());
+                    textInputTelefono.setErrorEnabled(result.isProper() ? false : true);
+                    textInputTelefono.setError(result.getMessage());
+
+                 return result.isProper();
+                });
+
+
+        Observable<Boolean> observable1 =
+        RxValidator.createFor(editContrasena)
+                .nonEmpty()
+                .sameAs(editContrasenaConfirmacion,"Las contraseñas deben coincidir")
+                .maxLength(15,"Máximo 15 caracteres")
+                .minLength(8, "Mínimo 8 caracteres")
+                .toObservable()
+                .map(result -> {
+                    // result.getItem().setError(result.isProper() ? null : result.getMessage());
+                    textInputContrasena.setErrorEnabled(result.isProper() ? false : true);
+                    textInputContrasena.setError(result.getMessage());
+
+                    return result.isProper();
+                });
+
+        Observable.combineLatest(observable1, observable, new Func2<Boolean, Boolean, Boolean>() {
+            @Override
+            public Boolean call(Boolean esValido, Boolean esValido2) {
+                Log.i(TAG,"AMONOSSSS RIKYYY");
+                return null;
+            }
+        });
+
+
+
+
+
     }
 }

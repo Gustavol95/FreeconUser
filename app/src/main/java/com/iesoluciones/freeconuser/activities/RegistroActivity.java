@@ -30,6 +30,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func2;
+import rx.functions.Func6;
 
 
 /**
@@ -145,7 +146,7 @@ public class RegistroActivity extends AppCompatActivity {
                                                                         .setCancelable(false)
                                                                         .setPositiveButton(App.getInstance().getResources().getString(R.string.button_send), (dialog, id) -> {
                                                                             //Enviar a drawer activity
-                                                                            //getContext().startActivity(new Intent(getContext(),DrawerActivity.class));
+                                                                            startActivity(new Intent(RegistroActivity.this,DrawerActivity.class));
                                                                             finish();
                                                                         })
                                                                         .setNegativeButton(getString(R.string.button_cancel), (dialog1, which) -> {
@@ -169,48 +170,99 @@ public class RegistroActivity extends AppCompatActivity {
 
     public void setUpValidators(){
 
-        Observable<Boolean> observable =
+        Observable<Boolean> telefonoValidator =
                 RxValidator.createFor(editTelefono)
-                        .nonEmpty("No puede estar vacío")
-                        .length( 10,"El telefono debe de ser de 10 dígitos")
+                        .nonEmpty(getResources().getString(R.string.non_empty))
+                        .length( 10,getResources().getString(R.string.phone_length))
                         .onFocusChanged()
+                        .onValueChanged()
                         .toObservable()
                         .observeOn(AndroidSchedulers.mainThread())
                 .map(result -> {
-                   // result.getItem().setError(result.isProper() ? null : result.getMessage());
                     textInputTelefono.setErrorEnabled(result.isProper() ? false : true);
                     textInputTelefono.setError(result.getMessage());
-
                  return result.isProper();
                 });
 
 
-        Observable<Boolean> observable1 =
-        RxValidator.createFor(editContrasena)
-                .nonEmpty()
-                .sameAs(editContrasenaConfirmacion,"Las contraseñas deben coincidir")
-                .maxLength(15,"Máximo 15 caracteres")
-                .minLength(8, "Mínimo 8 caracteres")
+        Observable<Boolean> contrasenaValidator =
+                RxValidator.createFor(editContrasena)
+                        .nonEmpty("No puede estar vacío")
+                        .maxLength(15,getResources().getString(R.string.password_max_length))
+                        .minLength(8, getResources().getString(R.string.password_min_length))
+                        .onFocusChanged()
+                        .toObservable()
+                        .map(result -> {
+                            textInputContrasena.setErrorEnabled(result.isProper() ? false : true);
+                            textInputContrasena.setError(result.getMessage());
+                            return result.isProper();
+                        });
+
+
+
+        Observable<Boolean> contrasenaConfirmValidator =
+        RxValidator.createFor(editContrasenaConfirmacion)
+                .nonEmpty(getResources().getString(R.string.non_empty))
+                .sameAs(editContrasena,getResources().getString(R.string.password_confirm_dont_match))
+                .maxLength(15,getResources().getString(R.string.password_max_length))
+                .minLength(8, getResources().getString(R.string.password_min_length))
+                .onFocusChanged()
+                .onValueChanged()
                 .toObservable()
                 .map(result -> {
-                    // result.getItem().setError(result.isProper() ? null : result.getMessage());
-                    textInputContrasena.setErrorEnabled(result.isProper() ? false : true);
-                    textInputContrasena.setError(result.getMessage());
-
+                    textInputContrasenaConfirmacion.setErrorEnabled(result.isProper() ? false : true);
+                    textInputContrasenaConfirmacion.setError(result.getMessage());
                     return result.isProper();
                 });
 
-        Observable.combineLatest(observable1, observable, new Func2<Boolean, Boolean, Boolean>() {
-            @Override
-            public Boolean call(Boolean esValido, Boolean esValido2) {
-                Log.i(TAG,"AMONOSSSS RIKYYY");
-                return null;
-            }
-        });
+
+        Observable<Boolean> emailValidator =
+                RxValidator.createFor(editCorreoElectronico)
+                .nonEmpty(getResources().getString(R.string.non_empty))
+                .email(getResources().getString(R.string.email_incorrect))
+                .onFocusChanged()
+                .toObservable()
+                .map(result -> {
+                    textInputCorreoElectronico.setErrorEnabled(result.isProper() ? false : true);
+                    textInputCorreoElectronico.setError(result.getMessage());
+                    return result.isProper();
+                });
+
+        Observable<Boolean> lastnameValidator =
+                RxValidator.createFor(editApellido)
+                        .nonEmpty(getResources().getString(R.string.non_empty))
+                        .onFocusChanged()
+                        .toObservable()
+                        .map(result -> {
+                            textInputApellido.setErrorEnabled(result.isProper() ? false : true);
+                            textInputApellido.setError(result.getMessage());
+                            return result.isProper();
+                        });
+        Observable<Boolean> firstnameValidator =
+                RxValidator.createFor(editNombre)
+                        .nonEmpty(getResources().getString(R.string.non_empty))
+                        .onFocusChanged()
+                        .toObservable()
+                        .map(result -> {
+                            textInputNombre.setErrorEnabled(result.isProper() ? false : true);
+                            textInputNombre.setError(result.getMessage());
+                            return result.isProper();
+                        });
 
 
+        firstnameValidator.subscribe();
+        lastnameValidator.subscribe();
+        emailValidator.subscribe();
+        contrasenaValidator.subscribe();
+        contrasenaConfirmValidator.subscribe();
+        telefonoValidator.subscribe();
 
-
+        Observable.combineLatest(firstnameValidator, lastnameValidator, emailValidator, contrasenaValidator, contrasenaConfirmValidator, telefonoValidator,
+                (nombre, apellido, email, contrasena, confirmaContrasena, telefono) -> nombre && apellido && email && contrasena &&  confirmaContrasena && telefono)
+                .subscribe(todoValido -> {
+                    Log.i(TAG,"Es Valido todo "+todoValido);
+                    buttonContinuar.setEnabled(todoValido);
+                });
 
     }
 }

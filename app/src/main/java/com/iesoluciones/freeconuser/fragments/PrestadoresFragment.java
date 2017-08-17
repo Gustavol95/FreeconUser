@@ -15,6 +15,7 @@ import com.iesoluciones.freeconuser.ObservableHelper;
 import com.iesoluciones.freeconuser.R;
 import com.iesoluciones.freeconuser.adapters.PrestadoresAdapter;
 import com.iesoluciones.freeconuser.models.Prestador;
+import com.iesoluciones.freeconuser.models.Servicio;
 import com.iesoluciones.freeconuser.network.helpers.CustomResourceObserver;
 
 import java.io.IOException;
@@ -38,10 +39,13 @@ public class PrestadoresFragment extends Fragment {
     @BindView(R.id.swipeRefresh)
     SwipeRefreshLayout swipeRefresh;
     PrestadoresAdapter adapter;
+    Servicio servicio;
 
 
-    public static PrestadoresFragment newInstance(){
-        return new PrestadoresFragment();
+    public static PrestadoresFragment newInstance(Servicio servicio){
+        PrestadoresFragment fragment=new PrestadoresFragment();
+        fragment.setServicio(servicio);
+        return fragment;
     }
 
     @Nullable
@@ -56,7 +60,7 @@ public class PrestadoresFragment extends Fragment {
         ButterKnife.bind(this,view);
         adapter=new PrestadoresAdapter(new ArrayList<Prestador>(), prestador -> {
             //Mandamos al fragment detalle
-            getFragmentManager().beginTransaction().replace(R.id.frameDrawer,PrestadorDetalleFragment.newInstance(prestador))
+            getFragmentManager().beginTransaction().replace(R.id.frameDrawer,PrestadorDetalleFragment.newInstance(prestador,servicio))
                     .addToBackStack("TAG")
                     .commit();
 
@@ -68,9 +72,26 @@ public class PrestadoresFragment extends Fragment {
         swipeRefresh.setRefreshing(true);
         swipeRefresh.setOnRefreshListener(() -> {
             //Actualizar
+            ObservableHelper.getPrestadoresPorServicio(servicio.getId()+"")
+                    .subscribe(new CustomResourceObserver<List<Prestador>>(getContext()) {
+                        @Override
+                        public void onNext(List<Prestador> value) {
+                            Log.i(TAG,value.toString());
+                            adapter.getPrestadorList().addAll(value);
+                            adapter.notifyDataSetChanged();
+                            swipeRefresh.setRefreshing(false);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            Log.i(TAG,"getPrestadoresPorServicio TRONIQUII");
+                            swipeRefresh.setRefreshing(false);
+                        }
+                    });
         });
 
-        ObservableHelper.getPrestadoresPorServicio("12")
+        ObservableHelper.getPrestadoresPorServicio(servicio.getId()+"")
                 .subscribe(new CustomResourceObserver<List<Prestador>>(getContext()) {
                     @Override
                     public void onNext(List<Prestador> value) {
@@ -83,10 +104,18 @@ public class PrestadoresFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        Log.i(TAG,"troniqui");
+                        Log.i(TAG,"getPrestadoresPorServicio TRONIQUII");
                         swipeRefresh.setRefreshing(false);
                     }
                 });
 
+    }
+
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
     }
 }

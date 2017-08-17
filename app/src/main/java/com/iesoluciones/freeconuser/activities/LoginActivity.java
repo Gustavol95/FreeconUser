@@ -18,6 +18,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.iesoluciones.freeconuser.ObservableHelper;
 import com.iesoluciones.freeconuser.R;
 import com.iesoluciones.freeconuser.models.Categoria;
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         loginButton.setReadPermissions("email");
         callbackManager = CallbackManager.Factory.create();
-        //Log.i(TAG,"FIREBASE TOKEENNN -----------> "+ FirebaseInstanceId.getInstance().getToken());
+        Log.i(TAG,"FIREBASE TOKEENNN -----------> "+ FirebaseInstanceId.getInstance().getToken());
         ObservableHelper.getServicios().subscribe(new CustomResourceObserver<List<Servicio>>(this) {
             @Override
             public void onNext(List<Servicio> value) {
@@ -81,12 +82,14 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
                 Log.i(TAG, loginResult.getAccessToken().getToken() + " TOKEN FB");
-                ObservableHelper.loginFb(loginResult.getAccessToken().getToken())
+                ObservableHelper.loginFb(loginResult.getAccessToken().getToken(), FirebaseInstanceId.getInstance().getToken())
                         .subscribe(new CustomResourceObserver<LoginFbResponse>(LoginActivity.this) {
                             @Override
                             public void onNext(LoginFbResponse value) {

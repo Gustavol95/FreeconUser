@@ -65,6 +65,13 @@
     <string name="network_settings">Ir a configuración de red</string>
     <string name="timeout">Tiempo de espera agotado</string>
 
+    <!-- Validators -->
+    <string name="non_empty">No puede estar vacío</string>
+    <string name="phone_length">El telefono debe de ser de 10 dígitos</string>
+    <string name="password_confirm_dont_match">Las contraseñas deben coincidir</string>
+    <string name="password_max_length">Máximo 15 caracteres</string>
+    <string name="password_min_length">Mínimo 8 caracteres</string>
+    <string name="email_incorrect">El correo proporcionado no es válido</string>
     <!-- FACEBOOK METADATA -->
     <string name="facebook_app_id">1665853763438850</string>
     <string name="fb_login_protocol_scheme">fb1665853763438850</string>

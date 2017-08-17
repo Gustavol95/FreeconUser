@@ -12,12 +12,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.iesoluciones.freeconuser.App;
+import com.iesoluciones.freeconuser.ObservableHelper;
 import com.iesoluciones.freeconuser.R;
 import com.iesoluciones.freeconuser.models.Prestador;
+import com.iesoluciones.freeconuser.models.Servicio;
+import com.iesoluciones.freeconuser.network.helpers.CustomResourceObserver;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 
 /**
  * Created by iedeveloper on 15/08/17.
@@ -40,10 +45,11 @@ public class PrestadorDetalleFragment  extends Fragment {
     @BindView(R.id.buttonSolicitar)
     AppCompatButton buttonSolicitar;
     Prestador prestador;
+    Servicio servicio;
 
-
-    public static PrestadorDetalleFragment newInstance(Prestador prestador){
+    public static PrestadorDetalleFragment newInstance(Prestador prestador, Servicio servicio){
         PrestadorDetalleFragment fragment=new PrestadorDetalleFragment();
+        fragment.setServicio(servicio);
         fragment.setPrestador(prestador);
         return fragment;
     }
@@ -75,6 +81,30 @@ public class PrestadorDetalleFragment  extends Fragment {
     @OnClick(R.id.buttonSolicitar)
     public void onClickButtonSolicitar(){
         Log.i(TAG,"Vamonos ricky");
+        ObservableHelper.solicitar(servicio.getCategoriaId()+"",servicio.getId()+"",prestador.getUsuario_id()+"",editMotivo.getText().toString())
+                .subscribe(new CustomResourceObserver<ResponseBody>(getContext()) {
+                    @Override
+                    public void onNext(ResponseBody value) {
+                        Log.i(TAG,"JALOOOOOOO");
+
+                        //Meter a la BD y mandar a Historial de Solicitudes.
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //super.onError(e);
+                        Log.i(TAG,"Tronó el solicitar :( "+e.toString());
+                    }
+                });
+    }
+
+
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
     }
 
 

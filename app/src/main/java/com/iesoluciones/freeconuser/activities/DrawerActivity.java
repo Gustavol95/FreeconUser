@@ -10,13 +10,25 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookActivity;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.iesoluciones.freeconuser.App;
+import com.iesoluciones.freeconuser.ObservableHelper;
 import com.iesoluciones.freeconuser.R;
 import com.iesoluciones.freeconuser.fragments.CategoriasFragment;
 import com.iesoluciones.freeconuser.fragments.HistorialFragment;
+import com.iesoluciones.freeconuser.network.helpers.CustomResourceObserver;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 
 
 public class DrawerActivity extends AppCompatActivity
@@ -29,7 +41,23 @@ public class DrawerActivity extends AppCompatActivity
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ObservableHelper.solicitar(3+"",1+"",3+"","Amonooos")
+                .subscribe(new CustomResourceObserver<ResponseBody>(this) {
+                    @Override
+                    public void onNext(ResponseBody value) {
+                        try {
+                            Log.i(TAG,value.source().readUtf8().toString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        //super.onError(e);
+                        Log.i(TAG,"TRONIQIO "+e.getMessage());
+                    }
+                });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -66,6 +94,20 @@ public class DrawerActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.cerrarSesion) {
             App.getInstance().getDaoSession().getUsuarioDao().deleteAll();
+            LoginManager.getInstance().logOut();
+            ObservableHelper.logout(FirebaseInstanceId.getInstance().getToken())
+                    .subscribe(new CustomResourceObserver<ResponseBody>(DrawerActivity.this) {
+                        @Override
+                        public void onNext(ResponseBody value) {
+                            Log.i(TAG,"AIII "+value.toString());
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            Log.i(TAG,"FALLO "+e.toString());
+                        }
+                    });
             startActivity(new Intent(DrawerActivity.this, LoginActivity.class));
             finish();
             return true;

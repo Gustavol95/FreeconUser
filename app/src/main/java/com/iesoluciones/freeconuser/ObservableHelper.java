@@ -28,6 +28,13 @@ public class ObservableHelper {
     static final String TAG = ObservableHelper.class.getSimpleName();
 
 
+    public static Observable<ResponseBody> login(String username, String password, String firebasetoken){
+        return App.getInstance().getApiRoutes().login(username,password,firebasetoken)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+
     public static Observable<LoginFbResponse> registrar(RegistroBody registroBody) {
         return App.getInstance().getApiRoutes().registrar(registroBody)
                 .subscribeOn(Schedulers.newThread())
@@ -74,8 +81,8 @@ public class ObservableHelper {
 
 }
 
-    public static Observable<LoginFbResponse> loginFb(String token) {
-        return App.getInstance().getApiRoutes().loginFb(token)
+    public static Observable<LoginFbResponse> loginFb(String tokenFacebook, String tokenFirebase) {
+        return App.getInstance().getApiRoutes().loginFb(tokenFacebook,tokenFirebase)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map((LoginFbResponse data) -> {
@@ -121,6 +128,21 @@ public class ObservableHelper {
 
     public static Observable<List<Prestador>> getPrestadoresPorServicio(String idServicio){
         return App.getInstance().getApiRoutes().getPrestadoresPorServicio(idServicio)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static Observable<ResponseBody> solicitar(String idCategoria, String idServicio, String idPrestador, String descripcion){
+        return App.getInstance().getApiRoutes().solicitar("Bearer "+App.getInstance().getToken(),idCategoria,idServicio,idPrestador,descripcion)
+                .subscribeOn(Schedulers.newThread())
+                .map((ResponseBody info) -> {
+                   //º Log.i(TAG, "AHI ESTA "+info.source().readUtf8().toString());
+                    return info;
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+    public static Observable<ResponseBody> logout(String firebaseToken){
+        return App.getInstance().getApiRoutes().logout("Bearer "+App.getInstance().getToken(),firebaseToken)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }

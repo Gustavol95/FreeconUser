@@ -1,8 +1,10 @@
 package com.iesoluciones.freeconuser.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.dgreenhalgh.android.simpleitemdecoration.linear.DividerItemDecoration;
 import com.iesoluciones.freeconuser.R;
 import com.iesoluciones.freeconuser.adapters.ServiciosAdapter;
 import com.iesoluciones.freeconuser.models.Servicio;
@@ -48,13 +51,17 @@ public class ServiciosFragment extends Fragment {
         adapter=new ServiciosAdapter(idCategoria, servicio -> {
             //Mandar a fragment y meter a backstack, y meter el servicio WEEEEBBBBB
             Toast.makeText(getContext(), "METELE AL "+servicio.getNombre(), Toast.LENGTH_SHORT).show();
-            getFragmentManager().beginTransaction().replace(R.id.frameDrawer,PrestadoresFragment.newInstance())
+
+            getFragmentManager().beginTransaction().replace(R.id.frameDrawer,PrestadoresFragment.newInstance(servicio))
                     .addToBackStack("TAG")
                     .commit();
 
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        Drawable dividerDrawable = ContextCompat.getDrawable(getContext(), R.drawable.divider);
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(dividerDrawable));
     }
 
     public ServiciosAdapter getAdapter() {

@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "693917038512",
+    "firebase_url": "https://freecon-fbfb3.firebaseio.com",
+    "project_id": "freecon-fbfb3",
+    "storage_bucket": "freecon-fbfb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693917038512:android:40f3c482be8c2079",
+        "android_client_info": {
+          "package_name": "com.iesoluciones.freecon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "693917038512-2rmm3qm1jj8m1a1kd3sfl7umu72fn91t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7ClKJHBejunp7w2P1S3DECf3wkwDGDPg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693917038512:android:fc4922a20822d613",
+        "android_client_info": {
+          "package_name": "com.iesoluciones.freeconuser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "693917038512-2rmm3qm1jj8m1a1kd3sfl7umu72fn91t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7ClKJHBejunp7w2P1S3DECf3wkwDGDPg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.LoginStatusCallback;
+import com.facebook.login.LoginManager;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.iesoluciones.freeconuser.ObservableHelper;
 import com.iesoluciones.freeconuser.R;
 import com.iesoluciones.freeconuser.models.LoginFbResponse;
@@ -29,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             } else {
                 Toast.makeText(this, "JALEESE COMPA", Toast.LENGTH_SHORT).show();
-                ObservableHelper.loginFb(accessToken.getToken())
+                ObservableHelper.loginFb(accessToken.getToken(), FirebaseInstanceId.getInstance().getToken())
                         .subscribe(new CustomResourceObserver<LoginFbResponse>(SplashActivity.this) {
                             @Override
                             public void onNext(LoginFbResponse value) {
@@ -49,7 +52,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         } else {
             Toast.makeText(this, "PIDELOO", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(SplashActivity.this,DrawerActivity.class));
+            startActivity(new Intent(SplashActivity.this,LoginActivity.class));
             finish();
         }
 

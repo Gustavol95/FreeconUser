@@ -111,6 +111,7 @@ public class RegistroActivity extends AppCompatActivity {
         registroBody.setContrasena(editContrasena.getText().toString());
         registroBody.setEmail(editCorreoElectronico.getText().toString());
         registroBody.setCelular(editTelefono.getText().toString());
+        if(!facebookUser){
         ObservableHelper.registrar(registroBody)
                 .subscribe(new CustomResourceObserver<LoginFbResponse>(this) {
                     @Override
@@ -146,7 +147,7 @@ public class RegistroActivity extends AppCompatActivity {
                                                                         .setCancelable(false)
                                                                         .setPositiveButton(App.getInstance().getResources().getString(R.string.button_send), (dialog, id) -> {
                                                                             //Enviar a drawer activity
-                                                                            startActivity(new Intent(RegistroActivity.this,DrawerActivity.class));
+                                                                            startActivity(new Intent(RegistroActivity.this,LoginActivity.class));
                                                                             finish();
                                                                         })
                                                                         .setNegativeButton(getString(R.string.button_cancel), (dialog1, which) -> {
@@ -165,7 +166,25 @@ public class RegistroActivity extends AppCompatActivity {
 
                     }
 
-                });
+                });}
+        else {
+            ObservableHelper.finalizarRegistroFb(registroBody)
+                    .subscribe(new CustomResourceObserver<LoginFbResponse>(this) {
+                        @Override
+                        public void onNext(LoginFbResponse value) {
+                            new AlertDialog.Builder(RegistroActivity.this)
+                                    .setMessage("Tu cuenta ha sido activada.")
+                                    .setTitle("Registro exitoso")
+                                    .setCancelable(false)
+                                    .setPositiveButton(App.getInstance().getResources().getString(R.string.button_send), (dialog, id) -> {
+                                        //Enviar a drawer activity
+                                        startActivity(new Intent(RegistroActivity.this,LoginActivity.class));
+                                        finish();
+                                    })
+                                    .show();
+                        }
+                    });
+        }
     }
 
     public void setUpValidators(){

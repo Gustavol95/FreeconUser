@@ -125,8 +125,12 @@ public class App extends Application {
         Observable<ResponseBody> solicitar(@Header("Authorization") String token,@Field("categoria_id") String idCategoria, @Field("servicio_id") String idServicio, @Field("user_proveedor_id") String idPrestador, @Field("descripcion") String descripcion);
 
         @FormUrlEncoded
-        @POST("proveedores/logoutfirebase")
+        @POST("clientes/logoutfirebase")
         Observable<ResponseBody> logout(@Header("Authorization") String jwtToken, @Field("token") String firebaseToken);
+
+        @PUT("clientes/finalizarregistro-fb")
+        Observable<LoginFbResponse> finalizarRegistroFb(@Body RegistroBody servicio);
+
     }
 
 }

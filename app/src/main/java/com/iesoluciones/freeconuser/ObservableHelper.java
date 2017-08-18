@@ -146,6 +146,28 @@ public class ObservableHelper {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public static Observable<LoginFbResponse> finalizarRegistroFb(RegistroBody registroBody) {
+        return App.getInstance().getApiRoutes().finalizarRegistroFb(registroBody)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map((LoginFbResponse data)->{
+                    Usuario user = new Usuario();
+                    user.setId(data.getUsuario().getId());
+                    user.setNombre(data.getUsuario().getFirst_name());
+                    user.setApellido(data.getUsuario().getLast_name());
+                    user.setEmail(data.getUsuario().getEmail());
+                    user.setAvatar(data.getUsuario().getAvatar());
+                    user.setCelular(data.getUsuario().getCelular());
+                    if (data.getUsuario().getActivado() == 0)
+                        user.setActivado(false);
+                    else
+                        user.setActivado(true);
+                    App.getInstance().getDaoSession().getUsuarioDao().insertOrReplaceInTx(user);
+                    App.getInstance().setToken(data.getToken());
+                    return data;
+                });
+    }
 }
 
 

@@ -41,23 +41,6 @@ public class DrawerActivity extends AppCompatActivity
         setContentView(R.layout.activity_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ObservableHelper.solicitar(3+"",1+"",3+"","Amonooos")
-                .subscribe(new CustomResourceObserver<ResponseBody>(this) {
-                    @Override
-                    public void onNext(ResponseBody value) {
-                        try {
-                            Log.i(TAG,value.source().readUtf8().toString());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //super.onError(e);
-                        Log.i(TAG,"TRONIQIO "+e.getMessage());
-                    }
-                });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

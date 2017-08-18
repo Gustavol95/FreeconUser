@@ -95,7 +95,7 @@ public class App extends Application {
 
         @FormUrlEncoded
         @POST("clientes/login")
-        Observable<ResponseBody> login(@Field("email") String email, @Field("password") String password, @Field("token") String tokenFirebase);
+        Observable<LoginFbResponse> login(@Field("email") String email, @Field("password") String password, @Field("token") String tokenFirebase);
 
 
         @POST("clientes/register")

@@ -133,7 +133,14 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.buttonIniciarSesion)
     public void iniciarSesion() {
-
+        ObservableHelper.login(editUsuario.getText().toString().trim(),editContrasena.getText().toString(),FirebaseInstanceId.getInstance().getToken())
+                .subscribe(new CustomResourceObserver<LoginFbResponse>(this) {
+                    @Override
+                    public void onNext(LoginFbResponse value) {
+                        startActivity(new Intent(LoginActivity.this,DrawerActivity.class));
+                        finish();
+                    }
+                });
     }
 
     @Override

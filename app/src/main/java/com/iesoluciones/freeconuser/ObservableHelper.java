@@ -28,10 +28,23 @@ public class ObservableHelper {
     static final String TAG = ObservableHelper.class.getSimpleName();
 
 
-    public static Observable<ResponseBody> login(String username, String password, String firebasetoken){
+    public static Observable<LoginFbResponse> login(String username, String password, String firebasetoken){
         return App.getInstance().getApiRoutes().login(username,password,firebasetoken)
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .map((LoginFbResponse data) -> {
+
+                    Usuario user = new Usuario();
+                    user.setId(data.getUsuario().getId());
+                    user.setNombre(data.getUsuario().getFirst_name());
+                    user.setApellido(data.getUsuario().getLast_name());
+                    user.setEmail(data.getUsuario().getEmail());
+                    user.setAvatar(data.getUsuario().getAvatar());
+                    Log.i(TAG, data.toString());
+                    App.getInstance().getDaoSession().getUsuarioDao().insertOrReplaceInTx(user);
+                    App.getInstance().setToken(data.getToken());
+                    return data;
+                });
     }
 
 

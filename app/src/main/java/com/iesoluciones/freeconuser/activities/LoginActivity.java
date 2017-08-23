@@ -41,8 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout inputLayoutUsuario;
     @BindView(R.id.editUsuario)
     TextInputEditText editUsuario;
-    @BindView(R.id.textInputContrasena)
-    TextInputLayout textInputConstrasena;
+    @BindView(R.id.textInputContrasena) TextInputLayout textInputConstrasena;
     @BindView(R.id.editContrasena)
     TextInputEditText editContrasena;
     @BindView(R.id.tvOlvidarContrasena)

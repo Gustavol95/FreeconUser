@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
+import com.facebook.AccessToken;
 import com.github.phajduk.rxvalidator.RxValidator;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.iesoluciones.freeconuser.App;
 import com.iesoluciones.freeconuser.ObservableHelper;
 import com.iesoluciones.freeconuser.R;
@@ -146,9 +148,32 @@ public class RegistroActivity extends AppCompatActivity {
                                                                         .setTitle("Registro exitoso")
                                                                         .setCancelable(false)
                                                                         .setPositiveButton(App.getInstance().getResources().getString(R.string.button_send), (dialog, id) -> {
-                                                                            //Enviar a drawer activity
-                                                                            startActivity(new Intent(RegistroActivity.this,LoginActivity.class));
-                                                                            finish();
+                                                                            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                                                                            if (accessToken != null) {
+                                                                                if (accessToken.isExpired()) {
+                                                                                    startActivity(new Intent(RegistroActivity.this, LoginActivity.class));
+                                                                                    finish();
+                                                                                } else {
+                                                                                    ObservableHelper.loginFb(accessToken.getToken(), FirebaseInstanceId.getInstance().getToken())
+                                                                                            .subscribe(new CustomResourceObserver<LoginFbResponse>(RegistroActivity.this) {
+                                                                                                @Override
+                                                                                                public void onNext(LoginFbResponse value) {
+                                                                                                    if (value.getUsuario().getActivado() == 1) {
+                                                                                                        //Enviar a drawer activity
+                                                                                                        startActivity(new Intent(RegistroActivity.this,DrawerActivity.class));
+                                                                                                        finish();
+                                                                                                    } else {
+                                                                                                        startActivity(new Intent(RegistroActivity.this,LoginActivity.class));
+                                                                                                        finish();
+                                                                                                    }
+                                                                                                }
+
+                                                                                            });
+
+                                                                                }
+
+                                                                            }
+
                                                                         })
                                                                         .setNegativeButton(getString(R.string.button_cancel), (dialog1, which) -> {
                                                                             finish();

@@ -1,6 +1,8 @@
 package com.iesoluciones.freeconuser;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.iesoluciones.freeconuser.models.CategoriaResponse;
 import com.iesoluciones.freeconuser.models.DaoMaster;
@@ -45,6 +47,7 @@ public class App extends Application {
     private DaoSession daoSession;
     ApiRoutes apiRoutes;
     String token;
+    private SharedPreferences prefs;
 
     public static synchronized App getInstance(){
         return shareInstance;
@@ -68,6 +71,7 @@ public class App extends Application {
                 .baseUrl(BASE_URL)
                 .build();
 
+        prefs = getSharedPreferences(getResources().getString(R.string.shared_preferences), Context.MODE_PRIVATE);
         apiRoutes = retrofit.create(ApiRoutes.class);
     }
 
@@ -80,10 +84,13 @@ public class App extends Application {
     }
 
     public String getToken() {
-        return token;
+        return prefs.getString(getResources().getString(R.string.token),"");
     }
 
     public void setToken(String token) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(getResources().getString(R.string.token), token);
+        editor.commit();
         this.token = token;
     }
 
